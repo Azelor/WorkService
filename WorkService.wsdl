@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+	xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
+	xmlns:tns="http://www.ttu.ee/idu0075/2015/ws/work" 
+	targetNamespace="http://www.ttu.ee/idu0075/2015/ws/work">
+	<wsdl:types>
+		<xs:schema  targetNamespace="http://www.ttu.ee/idu0075/2015/ws/work" elementFormDefault="qualified">
+			
+			<xs:complexType name ="workerType">
+				<xs:sequence>
+					<xs:element name="workerID" type="xs:integer"/>
+					<xs:element name="name" type="xs:string"/>
+					<xs:element name="occupation" type="xs:string"/>
+					<xs:element name="availability" minOccurs="1" maxOccurs="1">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:pattern value="Available|Unavailable"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="hourlyRate" type="xs:float"/>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name ="workerListType">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="worker" type="tns:workerType"/>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name ="orderType">
+				<xs:sequence>
+					<xs:element name="orderID" type="xs:integer"/>
+					<xs:element name="workerID" type="tns:integer"/>
+					<xs:element name="startDate" minOccurs="1" type="xs:date"/>
+					<xs:element name="endDate" type="tns:date"/>
+					<xs:element name="order" minOccurs="1" maxOccurs="1">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:pattern value="Open|Confirmed|Canceled"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name ="orderListType">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="order" type="tns:orderType"/>
+				</xs:sequence>
+			</xs:complexType>
+			
+			
+
+
+			<xs:element name="getWorkerRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="workerID" type="xs:integer"/>
+						<xs:element name="name" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			
+			<xs:element name="getWorkerResponse" type="tns:workerType"/>
+			
+			<xs:element name="addWorkerRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="name" type="xs:string"/>
+						<xs:element name="occupation" type="xs:string"/>
+						<xs:element name="availability" minOccurs="1" maxOccurs="1">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:pattern value="Available|Unavailable"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="hourlyRate" type="xs:float"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="addWorkerResponse" type="tns:workerType"/>
+			
+			<xs:element name="setWorkerRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="workerID" type="xs:string"/>
+						<xs:element name="name" type="xs:string"/ minOccurs="0">
+						<xs:element name="occupation" type="xs:string"/ minOccurs="0">
+						<xs:element name="availability" minOccurs="1" maxOccurs="1">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:pattern value="Available|Unavailable"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="hourlyRate" type="xs:float"/ minOccurs="0">
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			
+			<xs:element name="setworkerResponse" type="tns:workerType"/>
+			
+			<xs:element name="getWorkerListRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="availability" minOccurs="1" maxOccurs="1">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:pattern value="Available|Unavailable"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="occupation" minOccurs="0" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			
+			<xs:element name="getWorkerListResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="unbounded" name="worker" type="tns:workerType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			
+			<xs:element name="getOrderRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="orderID" type="xs:integer"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			
+			<xs:element name="getOrderResponse" type="tns:orderType"/>
+			
+			<xs:element name="addOrderRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="workerID" type="xs:integer"/>
+						<xs:element name="startDate" type="xs:date"/>
+						<xs:element name="endDate" type="xs:date"/>
+						<xs:element name="status" minOccurs="1" maxOccurs="1">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:pattern value="Open|Confirmed|Canceled"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			
+			<xs:element name="addOrderResponse" type="tns:orderType"/>
+
+			<xs:element name="setOrderRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="orderID" type="xs:integer"/>
+						<xs:element name="startDate" type="xs:date" minOccurs="0"/>
+						<xs:element name="endDate" type="xs:date" minOccurs="0"/>
+						<xs:element name="workerID" type="xs:integer" minOccurs="0"/>
+						<xs:element name="status" minOccurs="1" maxOccurs="1">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:pattern value="Open|Confirmed|Canceled"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			
+			<xs:element name="setOrderResponse" type="tns:orderType"/>
+			
+			<xs:element name="getOrderListRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="status" minOccurs="1" maxOccurs="1">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:pattern value="Open|Confirmed|Canceled"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			
+			<xs:element name="getOrderListResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="unbounded" name="order" type="tns:orderType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			
+		</xs:schema>
+		
+	</wsdl:types>
+	
+
+	
+	<wsdl:message name="getWorkerMessageRequest">
+		<wsdl:part name="parameter" element="tns:getWorkerRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getWorkerMessageResponse">
+		<wsdl:part name="parameter" element="tns:getWorkerResponse"/>
+	</wsdl:message>
+	<wsdl:message name="addWorkerMessageRequest">
+		<wsdl:part name="parameter" element="tns:addWorkerRequest"/>
+	</wsdl:message>
+	<wsdl:message name="addWorkerMessageResponse">
+		<wsdl:part name="parameter" element="tns:addWorkerResponse"/>
+	</wsdl:message>
+	<wsdl:message name="setWorkerMessageRequest">
+		<wsdl:part name="parameter" element="tns:setWorkerRequest"/>
+	</wsdl:message>
+	<wsdl:message name="setWorkerMessageResponse">
+		<wsdl:part name="parameter" element="tns:setWorkerResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getWorkerListMessageRequest">
+		<wsdl:part name="parameter" element="tns:getWorkerListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getWorkerListMessageResponse">
+		<wsdl:part name="parameter" element="tns:getWorkerListResponse"/>
+	</wsdl:message>
+
+
+	<wsdl:message name="getOrderMessageRequest">
+		<wsdl:part name="parameter" element="tns:getOrderRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getOrderMessageResponse">
+		<wsdl:part name="parameter" element="tns:getOrderResponse"/>
+	</wsdl:message>
+	<wsdl:message name="addOrderMessageRequest">
+		<wsdl:part name="parameter" element="tns:addOrderRequest"/>
+	</wsdl:message>
+	<wsdl:message name="addOrderMessageResponse">
+		<wsdl:part name="parameter" element="tns:addOrderResponse"/>
+	</wsdl:message>
+	<wsdl:message name="setOrderMessageRequest">
+		<wsdl:part name="parameter" element="tns:addOrderRequest"/>
+	</wsdl:message>
+	<wsdl:message name="setOrderMessageResponse">
+		<wsdl:part name="parameter" element="tns:addOrderResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getOrderListMessageRequest">
+		<wsdl:part name="parameter" element="tns:getOrderListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getOrderListMessageResponse">
+		<wsdl:part name="parameter" element="tns:getOrderListResponse"/>
+	</wsdl:message>
+
+	
+	<wsdl:portType name="orderPortType">
+		<wsdl:operation name="getworker">
+			<wsdl:input message="tns:getworkerMessageRequest"/>
+			<wsdl:output message="tns:getworkerMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addworker">
+			<wsdl:input message="tns:addworkerMessageRequest"/>
+			<wsdl:output message="tns:addworkerMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getworkerList">
+			<wsdl:input message="tns:getworkerListMessageRequest"/>
+			<wsdl:output message="tns:getworkerListMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getorder">
+			<wsdl:input message="tns:getorderMessageRequest"/>
+			<wsdl:output message="tns:getorderMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addorder">
+			<wsdl:input message="tns:addorderMessageRequest"/>
+			<wsdl:output message="tns:addorderMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getorderList">
+			<wsdl:input message="tns:getorderListMessageRequest"/>
+			<wsdl:output message="tns:getorderListMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getorderworkerList">
+			<wsdl:input message="tns:getorderworkerListMessageRequest"/>
+			<wsdl:output message="tns:getorderworkerListMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addorderworker">
+			<wsdl:input message="tns:addorderworkerMessageRequest"/>
+			<wsdl:output message="tns:addorderworkerMessageResponse"/>
+		</wsdl:operation>
+		
+	</wsdl:portType>
+	
+	<wsdl:binding name="OrderBinding" type="tns:OrderPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getWorker">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addWorker">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setWorker">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getWorkerList">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>	
+		<wsdl:operation name="getOrder">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addOrder">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="setOrder">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getOrderList">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>	
+	</wsdl:binding>
+	<wsdl:service name="WorkService">
+		<wsdl:port name="InvoicePort" binding="tns:OrderBinding">
+			<soap:address location="Empty"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
