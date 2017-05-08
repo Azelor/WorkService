@@ -38,7 +38,7 @@
 					<xs:element name="workerID" type="xs:integer"/>
 					<xs:element name="startDate" minOccurs="1" type="xs:date"/>
 					<xs:element name="endDate" type="xs:date"/>
-					<xs:element name="status" minOccurs="1" maxOccurs="1">
+					<xs:element name="order" minOccurs="1" maxOccurs="1">
 						<xs:simpleType>
 							<xs:restriction base="xs:string">
 								<xs:pattern value="Open|Confirmed|Canceled"/>
