@@ -62,15 +62,22 @@ public class WorkService {
     }
 
     public WorkerType setWorker(SetWorkerRequest parameter) {
-        WorkerType wt = null;
+        WorkerType wt = new WorkerType();
         if (parameter.getToken().equalsIgnoreCase("nugis")) {
-            /*for (int x=0; x<workerList.size(); x++) {
+            int x = 0;
+            for (x = 0; x<workerList.size(); x++) {
                 if (workerList.get(x).getWorkerID().equals(parameter.getWorkerID())) {
                     wt = workerList.get(x);
                 }
-            }*/
+            }
+            
+            wt.setName(parameter.getName());
+            wt.setOccupation(parameter.getOccupation());
+            wt.setAvailability(parameter.getAvailability());
+            wt.setHourlyRate(parameter.getHourlyRate());
+            wt.setWorkerID(workerList.get(x).getWorkerID());
         }
-        return null;
+        return wt;
     }
 
     public GetWorkerListResponse getWorkerList(GetWorkerListRequest parameter) {
