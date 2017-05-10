@@ -37,86 +37,109 @@ public class WorkService {
     static List<OrderType> orderList = new ArrayList<OrderType>();
 
     public WorkerType getWorker(GetWorkerRequest parameter) {
-        WorkerType wt = null;
+        WorkerType worker = null;
         if (parameter.getToken().equalsIgnoreCase("nugis")) {
             for (int x=0; x<workerList.size(); x++) {
-                if (workerList.get(x).getWorkerID().equals(parameter.getWorkerID())) {
-                    wt = workerList.get(x);
+                if (workerList.get(x).getWorkerID() == parameter.getWorkerID()) {
+                    worker = workerList.get(x);
                 }
             }
         }
-        return wt;
+        return worker;
     }
 
     public WorkerType addWorker(AddWorkerRequest parameter) {
-        WorkerType wt = new WorkerType();
+        WorkerType worker = new WorkerType();
         if (parameter.getToken().equalsIgnoreCase("nugis")) {
-            wt.setName(parameter.getName());
-            wt.setOccupation(parameter.getOccupation());
-            wt.setAvailability(parameter.getAvailability());
-            wt.setHourlyRate(parameter.getHourlyRate());
-            wt.setWorkerID(BigInteger.valueOf(newWorkerID++));
-            workerList.add(wt);
+            worker.setName(parameter.getName());
+            worker.setOccupation(parameter.getOccupation());
+            worker.setAvailability(parameter.getAvailability());
+            worker.setHourlyRate(parameter.getHourlyRate());
+            worker.setWorkerID(BigInteger.valueOf(newWorkerID++));
+            workerList.add(worker);
         }
-        return wt;
+        return worker;
     }
 
     public WorkerType setWorker(SetWorkerRequest parameter) {
-        WorkerType wt = new WorkerType();
+        BigInteger param = workerList.get(0).getWorkerID();
+        WorkerType worker = new WorkerType();
         if (parameter.getToken().equalsIgnoreCase("nugis")) {
             int x = 0;
             for (x = 0; x<workerList.size(); x++) {
                 if (workerList.get(x).getWorkerID().equals(parameter.getWorkerID())) {
-                    wt = workerList.get(x);
+                    worker = workerList.get(x);
+                    break;
                 }
             }
-            
-            wt.setName(parameter.getName());
-            wt.setOccupation(parameter.getOccupation());
-            wt.setAvailability(parameter.getAvailability());
-            wt.setHourlyRate(parameter.getHourlyRate());
-            wt.setWorkerID(workerList.get(x).getWorkerID());
+            // Name
+            String name = worker.getName();
+            if (parameter.getName().isEmpty()){
+                worker.setName(name);
+            }
+            else {
+                worker.setName(parameter.getName());
+            }
+            // Occupation
+            String occupation = worker.getOccupation();
+            if (parameter.getOccupation().isEmpty()){
+                worker.setOccupation(occupation);
+            }
+            else {
+                worker.setOccupation(parameter.getOccupation());
+            }
+            // Hourly Rate
+            BigInteger hourlyRate = worker.getHourlyRate();
+            if (parameter.getHourlyRate() == null) {
+                worker.setHourlyRate(hourlyRate);
+            }
+            else {
+                worker.setHourlyRate(parameter.getHourlyRate());
+            }
+            worker.setAvailability(parameter.getAvailability());
+            worker.setWorkerID(workerList.get(x).getWorkerID());
+            //wt.setHourlyRate(parameter.getHourlyRate());
         }
-        return wt;
-    }
+        return worker;
+    }//
 
     public GetWorkerListResponse getWorkerList(GetWorkerListRequest parameter) {
-        GetWorkerListResponse wlt = new GetWorkerListResponse();
+        GetWorkerListResponse workerlist = new GetWorkerListResponse();
         if (parameter.getToken().equalsIgnoreCase("nugis")) {
             for (WorkerType worker : workerList) {
-                wlt.getWorker().add(worker);
+                workerlist.getWorker().add(worker);
             }
         }
-        return wlt;
+        return workerlist;
     }
 
     public OrderType getOrder(GetOrderRequest parameter) {
-        OrderType ot = null;
+        OrderType order = null;
         if (parameter.getToken().equalsIgnoreCase("nugis")) {
             for (int x=0; x<orderList.size(); x++) {
-                if (orderList.get(x).getOrderID().equals(parameter.getOrderID())) {
-                    ot = orderList.get(x);
+                if (orderList.get(x).getOrderID() == parameter.getOrderID()) {
+                    order = orderList.get(x);
                 }
             }
         }
-        return ot;
+        return order;
     }
 
     public OrderType addOrder(AddOrderRequest parameter) {
-        OrderType ot = new OrderType();
+        OrderType order = new OrderType();
         if (parameter.getToken().equalsIgnoreCase("nugis")) {
-            ot.setWorkerID(parameter.getWorkerID());
-            ot.setStartDate(parameter.getStartDate());
-            ot.setEndDate(parameter.getEndDate());
-            ot.setStatus(parameter.getStatus());
-            ot.setOrderID(BigInteger.valueOf(newOrderID++));
-            orderList.add(ot);
+            order.setWorkerID(parameter.getWorkerID());
+            order.setStartDate(parameter.getStartDate());
+            order.setEndDate(parameter.getEndDate());
+            order.setStatus(parameter.getStatus());
+            order.setOrderID(BigInteger.valueOf(newOrderID++));
+            orderList.add(order);
         }
-        return ot;
+        return order;
     }
 
     public OrderType setOrder(SetOrderRequest parameter) {
-        OrderType ot = new OrderType();
+        OrderType order = new OrderType();
         if (parameter.getToken().equalsIgnoreCase("nugis")) {
             
         }
@@ -124,13 +147,13 @@ public class WorkService {
     }
 
     public GetOrderListResponse getOrderList(GetOrderListRequest parameter) {
-        GetOrderListResponse olt = new GetOrderListResponse();
+        GetOrderListResponse orderlist = new GetOrderListResponse();
         if (parameter.getToken().equalsIgnoreCase("nugis")) {
             for (OrderType order : orderList) {
-                olt.getOrder().add(order);
+                orderlist.getOrder().add(order);
             }
         }
-        return olt;
+        return orderlist;
     }
     
 }
