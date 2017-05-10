@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.jws.WebService;
 import java.math.BigInteger;
+import java.util.Date;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
  *
@@ -62,7 +64,6 @@ public class WorkService {
     }
 
     public WorkerType setWorker(SetWorkerRequest parameter) {
-        BigInteger param = workerList.get(0).getWorkerID();
         WorkerType worker = new WorkerType();
         if (parameter.getToken().equalsIgnoreCase("nugis")) {
             int x = 0;
@@ -98,7 +99,6 @@ public class WorkService {
             }
             worker.setAvailability(parameter.getAvailability());
             worker.setWorkerID(workerList.get(x).getWorkerID());
-            //wt.setHourlyRate(parameter.getHourlyRate());
         }
         return worker;
     }//
@@ -141,9 +141,37 @@ public class WorkService {
     public OrderType setOrder(SetOrderRequest parameter) {
         OrderType order = new OrderType();
         if (parameter.getToken().equalsIgnoreCase("nugis")) {
+            int x = 0;
+            for (x = 0; x<orderList.size(); x++) {
+                if (orderList.get(x).getOrderID().equals(parameter.getOrderID())) {
+                    order = orderList.get(x);
+                    break;
+                }
+            }
+            order.setOrderID(orderList.get(x).getOrderID());
+            order.setStatus(parameter.getStatus());
+            // startDate
+            XMLGregorianCalendar startDate = order.getStartDate();
+            if (parameter.getStartDate() == null){
+                order.setStartDate(startDate);
+            }
+            else {
+                order.setStartDate(parameter.getStartDate());
+            }
+            order.setOrderID(orderList.get(x).getOrderID());
+            order.setStatus(parameter.getStatus());
+            // endDate
+            XMLGregorianCalendar endDate = order.getEndDate();
+            if (parameter.getEndDate() == null){
+                order.setEndDate(endDate);
+            }
+            else {
+                order.setEndDate(parameter.getEndDate());
+            }
             
-        }
-        return null;
+            
+        }    
+        return order;
     }
 
     public GetOrderListResponse getOrderList(GetOrderListRequest parameter) {
@@ -152,6 +180,8 @@ public class WorkService {
             for (OrderType order : orderList) {
                 orderlist.getOrder().add(order);
             }
+            
+            
         }
         return orderlist;
     }
