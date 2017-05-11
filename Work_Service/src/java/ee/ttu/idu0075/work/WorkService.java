@@ -39,10 +39,10 @@ public class WorkService {
     static List<OrderType> orderList = new ArrayList<OrderType>();
 
     public WorkerType getWorker(GetWorkerRequest parameter) {
-        WorkerType worker = null;
+        WorkerType worker = new WorkerType();
         if (parameter.getToken().equalsIgnoreCase("nugis")) {
             for (int x=0; x<workerList.size(); x++) {
-                if (workerList.get(x).getWorkerID() == parameter.getWorkerID()) {
+                if (workerList.get(x).getWorkerID().equals(parameter.getWorkerID())) {
                     worker = workerList.get(x);
                 }
             }
@@ -101,7 +101,7 @@ public class WorkService {
             worker.setWorkerID(workerList.get(x).getWorkerID());
         }
         return worker;
-    }//
+    }
 
     public GetWorkerListResponse getWorkerList(GetWorkerListRequest parameter) {
         GetWorkerListResponse workerlist = new GetWorkerListResponse();
@@ -114,10 +114,13 @@ public class WorkService {
     }
 
     public OrderType getOrder(GetOrderRequest parameter) {
-        OrderType order = null;
+        OrderType order = new OrderType();
         if (parameter.getToken().equalsIgnoreCase("nugis")) {
+            int size = orderList.size();
             for (int x=0; x<orderList.size(); x++) {
-                if (orderList.get(x).getOrderID() == parameter.getOrderID()) {
+                BigInteger test = orderList.get(x).getOrderID();
+                BigInteger test2 = parameter.getOrderID();
+                if (orderList.get(x).getOrderID().equals(parameter.getOrderID())) {
                     order = orderList.get(x);
                 }
             }
@@ -167,9 +170,7 @@ public class WorkService {
             }
             else {
                 order.setEndDate(parameter.getEndDate());
-            }
-            
-            
+            }   
         }    
         return order;
     }
@@ -180,8 +181,6 @@ public class WorkService {
             for (OrderType order : orderList) {
                 orderlist.getOrder().add(order);
             }
-            
-            
         }
         return orderlist;
     }
