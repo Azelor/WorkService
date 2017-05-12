@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="4c0e45da-3436-480e-a0c5-44e43550216f" activeEnvironment="Default" name="WorkService?wsdl" resourceRoot="" soapui-version="5.3.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="4b107df6-dcbf-49f0-b0fe-52b2c0584ad5" wsaVersion="NONE" name="workBinding" type="wsdl" bindingName="{http://www.ttu.ee/idu0075/2015/ws/work}workBinding" soapVersion="1_1" anonymous="optional" definition="http://kaarelsoota361:8080/Work_Service/WorkService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://kaarelsoota361:8080/Work_Service/WorkService?wsdl"><con:part><con:url>http://kaarelsoota361:8080/Work_Service/WorkService?wsdl</con:url><con:content><![CDATA[<!--Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown.-->
+<wsdl:definitions targetNamespace="http://www.ttu.ee/idu0075/2015/ws/work" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.ttu.ee/idu0075/2015/ws/work">
+  <wsdl:types>
+    <xs:schema targetNamespace="http://www.ttu.ee/idu0075/2015/ws/work" elementFormDefault="qualified">
+      <xs:complexType name="workerType">
+        <xs:sequence>
+          <xs:element name="workerID" type="xs:integer"/>
+          <xs:element name="name" type="xs:string"/>
+          <xs:element name="occupation" type="xs:string"/>
+          <xs:element name="availability" minOccurs="1" maxOccurs="1">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:pattern value="Available|Unavailable"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="hourlyRate" type="xs:integer"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="workerListType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="worker" type="tns:workerType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="orderType">
+        <xs:sequence>
+          <xs:element name="orderID" type="xs:integer"/>
+          <xs:element name="workerID" type="xs:integer"/>
+          <xs:element name="startDate" minOccurs="1" type="xs:date"/>
+          <xs:element name="endDate" type="xs:date"/>
+          <xs:element name="status" minOccurs="1" maxOccurs="1">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:pattern value="Open|Confirmed|Canceled"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="orderListType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="order" type="tns:orderType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="getWorkerRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="workerID" type="xs:integer"/>
+            <xs:element name="name" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getWorkerResponse" type="tns:workerType"/>
+      <xs:element name="addWorkerRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="occupation" type="xs:string"/>
+            <xs:element name="availability" minOccurs="1" maxOccurs="1">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:pattern value="Available|Unavailable"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="hourlyRate" type="xs:integer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addWorkerResponse" type="tns:workerType"/>
+      <xs:element name="setWorkerRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="workerID" type="xs:integer"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"/>
+            <xs:element name="occupation" type="xs:string" minOccurs="0"/>
+            <xs:element name="availability" minOccurs="1" maxOccurs="1">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:pattern value="Available|Unavailable"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="hourlyRate" type="xs:integer" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="setWorkerResponse" type="tns:workerType"/>
+      <xs:element name="getWorkerListRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="availability" minOccurs="1" maxOccurs="1">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:pattern value="Available|Unavailable"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="occupation" minOccurs="0" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getWorkerListResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="worker" type="tns:workerType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getOrderRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="orderID" type="xs:integer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getOrderResponse" type="tns:orderType"/>
+      <xs:element name="addOrderRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="workerID" type="xs:integer"/>
+            <xs:element name="startDate" type="xs:date"/>
+            <xs:element name="endDate" type="xs:date"/>
+            <xs:element name="status" minOccurs="1" maxOccurs="1">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:pattern value="Open|Confirmed|Canceled"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addOrderResponse" type="tns:orderType"/>
+      <xs:element name="setOrderRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="orderID" type="xs:integer"/>
+            <xs:element name="startDate" type="xs:date" minOccurs="0"/>
+            <xs:element name="endDate" type="xs:date" minOccurs="0"/>
+            <xs:element name="workerID" type="xs:integer" minOccurs="0"/>
+            <xs:element name="status" minOccurs="1" maxOccurs="1">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:pattern value="Open|Confirmed|Canceled"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="setOrderResponse" type="tns:orderType"/>
+      <xs:element name="getOrderListRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="status" minOccurs="1" maxOccurs="1">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:pattern value="Open|Confirmed|Canceled"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getOrderListResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="order" type="tns:orderType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getWorkerMessageRequest">
+    <wsdl:part name="parameter" element="tns:getWorkerRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getWorkerMessageResponse">
+    <wsdl:part name="parameter" element="tns:getWorkerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addWorkerMessageRequest">
+    <wsdl:part name="parameter" element="tns:addWorkerRequest"/>
+  </wsdl:message>
+  <wsdl:message name="addWorkerMessageResponse">
+    <wsdl:part name="parameter" element="tns:addWorkerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="setWorkerMessageRequest">
+    <wsdl:part name="parameter" element="tns:setWorkerRequest"/>
+  </wsdl:message>
+  <wsdl:message name="setWorkerMessageResponse">
+    <wsdl:part name="parameter" element="tns:setWorkerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getWorkerListMessageRequest">
+    <wsdl:part name="parameter" element="tns:getWorkerListRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getWorkerListMessageResponse">
+    <wsdl:part name="parameter" element="tns:getWorkerListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getOrderMessageRequest">
+    <wsdl:part name="parameter" element="tns:getOrderRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getOrderMessageResponse">
+    <wsdl:part name="parameter" element="tns:getOrderResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addOrderMessageRequest">
+    <wsdl:part name="parameter" element="tns:addOrderRequest"/>
+  </wsdl:message>
+  <wsdl:message name="addOrderMessageResponse">
+    <wsdl:part name="parameter" element="tns:addOrderResponse"/>
+  </wsdl:message>
+  <wsdl:message name="setOrderMessageRequest">
+    <wsdl:part name="parameter" element="tns:setOrderRequest"/>
+  </wsdl:message>
+  <wsdl:message name="setOrderMessageResponse">
+    <wsdl:part name="parameter" element="tns:setOrderResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getOrderListMessageRequest">
+    <wsdl:part name="parameter" element="tns:getOrderListRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getOrderListMessageResponse">
+    <wsdl:part name="parameter" element="tns:getOrderListResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="workPortType">
+    <wsdl:operation name="getWorker">
+      <wsdl:input message="tns:getWorkerMessageRequest"/>
+      <wsdl:output message="tns:getWorkerMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addWorker">
+      <wsdl:input message="tns:addWorkerMessageRequest"/>
+      <wsdl:output message="tns:addWorkerMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="setWorker">
+      <wsdl:input message="tns:setWorkerMessageRequest"/>
+      <wsdl:output message="tns:setWorkerMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getWorkerList">
+      <wsdl:input message="tns:getWorkerListMessageRequest"/>
+      <wsdl:output message="tns:getWorkerListMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getOrder">
+      <wsdl:input message="tns:getOrderMessageRequest"/>
+      <wsdl:output message="tns:getOrderMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addOrder">
+      <wsdl:input message="tns:addOrderMessageRequest"/>
+      <wsdl:output message="tns:addOrderMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="setOrder">
+      <wsdl:input message="tns:setOrderMessageRequest"/>
+      <wsdl:output message="tns:setOrderMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getOrderList">
+      <wsdl:input message="tns:getOrderListMessageRequest"/>
+      <wsdl:output message="tns:getOrderListMessageResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="workBinding" type="tns:workPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getWorker">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addWorker">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setWorker">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getWorkerList">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getOrder">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addOrder">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setOrder">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getOrderList">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WorkService">
+    <wsdl:port name="workPort" binding="tns:workBinding">
+      <soap:address location="http://kaarelsoota361:8080/Work_Service/WorkService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://kaarelsoota361:8080/Work_Service/WorkService</con:endpoint></con:endpoints><con:operation id="9196fdb5-8ffa-4834-9455-f3fbc777d6b5" isOneWay="false" action="" name="addOrder" bindingOperationName="addOrder" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="b1d2b48f-7463-4fa2-9302-b1fa9c5ee934" name="AddOrderRequest"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://kaarelsoota361:8080/Work_Service/WorkService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:work="http://www.ttu.ee/idu0075/2015/ws/work">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <work:addOrderRequest>\r
+         <work:token>nugis</work:token>\r
+         <work:workerID>3</work:workerID>\r
+         <work:startDate>2017-08-03</work:startDate>\r
+         <work:endDate>2017-08-12</work:endDate>\r
+         <work:status>Open</work:status>\r
+      </work:addOrderRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/work/workPortType/addOrderRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="b79aa042-c57a-4c38-8107-003e4b6af3c7" isOneWay="false" action="" name="addWorker" bindingOperationName="addWorker" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="49fff721-4040-49eb-94f6-d6172360a6fb" name="AddWorkerRequest"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://kaarelsoota361:8080/Work_Service/WorkService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:work="http://www.ttu.ee/idu0075/2015/ws/work">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <work:addWorkerRequest>\r
+         <work:token>nugis</work:token>\r
+         <work:name>Kristjan Laanemaa</work:name>\r
+         <work:occupation>Ehitaja</work:occupation>\r
+         <work:availability>Available</work:availability>\r
+         <work:hourlyRate>7</work:hourlyRate>\r
+      </work:addWorkerRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/work/workPortType/addWorkerRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="3e4369c7-2ed1-4221-89d2-6e2480019331" isOneWay="false" action="" name="getOrder" bindingOperationName="getOrder" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="e9582de1-f48c-492d-b6da-7f57fba0f16d" name="GetOrderRequest"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://kaarelsoota361:8080/Work_Service/WorkService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:work="http://www.ttu.ee/idu0075/2015/ws/work">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <work:getOrderRequest>\r
+         <work:token>nugis</work:token>\r
+         <work:orderID>2</work:orderID>\r
+      </work:getOrderRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/work/workPortType/getOrderRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="9ccaa31c-e149-4056-858d-d72b4798eba7" isOneWay="false" action="" name="getOrderList" bindingOperationName="getOrderList" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="ee53ac5e-e506-4d66-b818-553d9d3e96d4" name="GetOrderListRequest"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://kaarelsoota361:8080/Work_Service/WorkService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:work="http://www.ttu.ee/idu0075/2015/ws/work">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <work:getOrderListRequest>\r
+         <work:token>nugis</work:token>\r
+         <work:status>Open</work:status>\r
+      </work:getOrderListRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/work/workPortType/getOrderListRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="1099e1ac-e744-4e51-a226-365e69f86c97" isOneWay="false" action="" name="getWorker" bindingOperationName="getWorker" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="5e9f979d-1241-4d93-929c-259ece2f6879" name="GetWorkerRequest"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://kaarelsoota361:8080/Work_Service/WorkService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:work="http://www.ttu.ee/idu0075/2015/ws/work">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <work:getWorkerRequest>\r
+         <work:token>nugis</work:token>\r
+         <work:workerID>1</work:workerID>\r
+         <work:name>Indrek Vesi</work:name>\r
+      </work:getWorkerRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/work/workPortType/getWorkerRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="3a40db6f-acf5-4e17-afa9-c321872dbd61" isOneWay="false" action="" name="getWorkerList" bindingOperationName="getWorkerList" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="a970927b-87eb-4ee6-8547-9bfd79150142" name="GetWorkerListRequest"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://kaarelsoota361:8080/Work_Service/WorkService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:work="http://www.ttu.ee/idu0075/2015/ws/work">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <work:getWorkerListRequest>\r
+         <work:token>nugis</work:token>\r
+         <work:availability>Available</work:availability>\r
+         <!--Optional:-->\r
+         <work:occupation></work:occupation>\r
+      </work:getWorkerListRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/work/workPortType/getWorkerListRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="32bad1b8-faad-4a67-9742-5ee8df610327" isOneWay="false" action="" name="setOrder" bindingOperationName="setOrder" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="58737ca7-16f6-4974-9725-cdd14e519db1" name="SetOrderRequest"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://kaarelsoota361:8080/Work_Service/WorkService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:work="http://www.ttu.ee/idu0075/2015/ws/work">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <work:setOrderRequest>\r
+         <work:token>nugis</work:token>\r
+         <work:orderID>2</work:orderID>\r
+         <!--Optional:-->\r
+         <work:startDate></work:startDate>\r
+         <!--Optional:-->\r
+         <work:endDate></work:endDate>\r
+         <!--Optional:-->\r
+         <work:workerID>1</work:workerID>\r
+         <work:status>Open</work:status>\r
+      </work:setOrderRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/work/workPortType/setOrderRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="cc63a0be-c735-4912-abbf-d6c7de754088" isOneWay="false" action="" name="setWorker" bindingOperationName="setWorker" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="e10f0237-50d9-4db4-80f1-540ef8b0a2bb" name="SetWorkerRequest"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://kaarelsoota361:8080/Work_Service/WorkService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:work="http://www.ttu.ee/idu0075/2015/ws/work">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <work:setWorkerRequest>\r
+         <work:token>nugis</work:token>\r
+         <work:workerID>1</work:workerID>\r
+         <!--Optional:-->\r
+         <work:name></work:name>\r
+         <!--Optional:-->\r
+         <work:occupation>Vanemelektrik</work:occupation>\r
+         <work:availability>Available</work:availability>\r
+         <!--Optional:-->\r
+         <work:hourlyRate>13</work:hourlyRate>\r
+      </work:setWorkerRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/work/workPortType/setWorkerRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="2dc255fd-bea7-40cb-8efb-69b2ebacab26" name="workBinding TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="0c8aa676-4157-457c-8d0f-a06b2a39dd5d" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="addOrder TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="f76ad886-9074-4138-9a09-1cefc65a33df" name="addOrder"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>workBinding</con:interface><con:operation>addOrder</con:operation><con:request name="addOrder" id="ccc243a9-6bb6-4a69-bdea-344a159884b5"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://kaarelsoota361:8080/Work_Service/WorkService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:work="http://www.ttu.ee/idu0075/2015/ws/work">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <work:addOrderRequest>\r
+         <work:token>nugis</work:token>\r
+         <work:workerID>1</work:workerID>\r
+         <work:startDate>1999-01-01</work:startDate>\r
+         <work:endDate>2000-01-01</work:endDate>\r
+         <work:status>Open</work:status>\r
+      </work:addOrderRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="a109ba15-0a99-4229-a69b-7e689687db65" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Simple Contains" id="e94b6bcd-bfc4-4a2d-88d2-9a8f8fabcd6a" name="Contains"><con:configuration><token>(?s).*&lt;orderID>[1-9]+&lt;/orderID>.*</token><ignoreCase>false</ignoreCase><useRegEx>true</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/work/workPortType/addOrderRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="dd20397d-ea75-4134-a6fa-3d1b1c767d37" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="addWorker TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="e3a97b25-e30b-4bfb-be47-d19bb0318d05" name="addWorker"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>workBinding</con:interface><con:operation>addWorker</con:operation><con:request name="addWorker" id="de407bb4-e29d-4e7f-90c3-d1e039b72fc7"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://kaarelsoota361:8080/Work_Service/WorkService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:work="http://www.ttu.ee/idu0075/2015/ws/work">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <work:addWorkerRequest>\r
+         <work:token>nugis</work:token>\r
+         <work:name>peeter</work:name>\r
+         <work:occupation>ehitaja</work:occupation>\r
+         <work:availability>Available</work:availability>\r
+         <work:hourlyRate>20</work:hourlyRate>\r
+      </work:addWorkerRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="0c2cc46d-e33e-459e-8279-a110d1c4f5c1" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Simple Contains" id="f030700b-d637-495a-bff5-87e756bc4c88" name="Contains"><con:configuration><token>(?s).*&lt;workerID>[1-9]+&lt;/workerID>.*</token><ignoreCase>false</ignoreCase><useRegEx>true</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/work/workPortType/addWorkerRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="bcd6ec44-e172-4056-b6e6-6210929547fb" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getOrder TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="5a4263c9-9bcc-4c20-8812-c1b1f3ce2563" name="getOrder"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>workBinding</con:interface><con:operation>getOrder</con:operation><con:request name="getOrder" id="a58f1352-4c24-43a3-8e0b-7938e0326e98"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://kaarelsoota361:8080/Work_Service/WorkService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:work="http://www.ttu.ee/idu0075/2015/ws/work">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <work:getOrderRequest>\r
+         <work:token>nugis</work:token>\r
+         <work:orderID>1</work:orderID>\r
+      </work:getOrderRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="70748da4-76ae-474f-ad3f-cfa857090e3e" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Simple Contains" id="97fd68e3-6091-4cb0-9fa8-3a2bd2827db8" name="Contains"><con:configuration><token>(?s).*&lt;status>.+&lt;/status>.*</token><ignoreCase>false</ignoreCase><useRegEx>true</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/work/workPortType/getOrderRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="1a856844-7b78-40de-9826-1dfea64fbd13" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getOrderList TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="c83e1bf3-850c-4c67-8a1c-32836f53ddbe" name="getOrderList"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>workBinding</con:interface><con:operation>getOrderList</con:operation><con:request name="getOrderList" id="bd2b399e-8cb6-4e30-b513-d4e66bb26eae"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://kaarelsoota361:8080/Work_Service/WorkService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:work="http://www.ttu.ee/idu0075/2015/ws/work">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <work:getOrderListRequest>\r
+         <work:token>nugis</work:token>\r
+         <work:status>Open</work:status>\r
+      </work:getOrderListRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="68000930-67e2-46a3-b78c-00669f32a6bc" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Simple Contains" id="004b3007-2064-4f14-8d01-a41a8bb4e04a" name="Contains"><con:configuration><token>(?s).*&lt;status>.+&lt;/status>.*</token><ignoreCase>false</ignoreCase><useRegEx>true</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/work/workPortType/getOrderListRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="6c1501be-364b-46c0-a8a1-75018a999677" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getWorker TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="be53a01b-a880-485a-95f6-34621b28a04e" name="getWorker"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>workBinding</con:interface><con:operation>getWorker</con:operation><con:request name="getWorker" id="dab7840e-c044-43c3-8d55-8b5e445ec533"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://kaarelsoota361:8080/Work_Service/WorkService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:work="http://www.ttu.ee/idu0075/2015/ws/work">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <work:getWorkerRequest>\r
+         <work:token>nugis</work:token>\r
+         <work:workerID>1</work:workerID>\r
+         <work:name>peeter</work:name>\r
+      </work:getWorkerRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="73b322c0-1a7b-4512-bfcf-1d8a03aff9be" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Simple Contains" id="69dbfc80-c5b4-48eb-ab41-a9c37a008f9a" name="Contains"><con:configuration><token>(?s).*&lt;workerID>[1-9]+&lt;/workerID>.*</token><ignoreCase>false</ignoreCase><useRegEx>true</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/work/workPortType/getWorkerRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="b39077a3-5443-4655-a1c8-144204731c28" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getWorkerList TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="769790ed-69ac-4f7b-96a1-63192b4c2c95" name="getWorkerList"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>workBinding</con:interface><con:operation>getWorkerList</con:operation><con:request name="getWorkerList" id="8e40f1bf-0c78-488c-a41d-8a6ca3e5428f"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://kaarelsoota361:8080/Work_Service/WorkService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:work="http://www.ttu.ee/idu0075/2015/ws/work">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <work:getWorkerListRequest>\r
+         <work:token>nugis</work:token>\r
+         <work:availability>Available</work:availability>\r
+         <!--Optional:-->\r
+         <work:occupation></work:occupation>\r
+      </work:getWorkerListRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="7688798c-06b5-46f4-bedb-26e5963e53c2" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Simple Contains" id="fa1504e0-4fd0-464c-b025-5c78d4583ef5" name="Contains"><con:configuration><token>(?s).*&lt;workerID>[1-9]+&lt;/workerID>.*</token><ignoreCase>false</ignoreCase><useRegEx>true</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/work/workPortType/getWorkerListRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="ed7146f6-9921-409f-a587-1f850c8c03bb" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="setOrder TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="b7a4d4c5-b07d-43e6-adbf-1bc11671e782" name="setOrder"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>workBinding</con:interface><con:operation>setOrder</con:operation><con:request name="setOrder" id="c5f97dd5-a0e2-44ba-8d34-42c7e5f647c9"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://kaarelsoota361:8080/Work_Service/WorkService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:work="http://www.ttu.ee/idu0075/2015/ws/work">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <work:setOrderRequest>\r
+         <work:token>nugis</work:token>\r
+         <work:orderID>1</work:orderID>\r
+         <!--Optional:-->\r
+         <work:startDate>?</work:startDate>\r
+         <!--Optional:-->\r
+         <work:endDate>?</work:endDate>\r
+         <!--Optional:-->\r
+         <work:workerID>?</work:workerID>\r
+         <work:status>Open</work:status>\r
+      </work:setOrderRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="5ca953d0-b02e-485e-af53-5c9d944db38b" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Simple Contains" id="d9e50776-34e1-410d-be53-e4acedeb6da5" name="Contains"><con:configuration><token>(?s).*&lt;status>.+&lt;/status>.*</token><ignoreCase>false</ignoreCase><useRegEx>true</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/work/workPortType/setOrderRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="40ae1e49-e748-4f9d-8c82-87209663a8c0" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="setWorker TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="e948868a-2dc8-4f1b-8921-7dde89a4f2cf" name="setWorker"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>workBinding</con:interface><con:operation>setWorker</con:operation><con:request name="setWorker" id="31b2d567-12af-4a24-a039-bb320f95ae3d"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://kaarelsoota361:8080/Work_Service/WorkService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:work="http://www.ttu.ee/idu0075/2015/ws/work">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <work:setWorkerRequest>\r
+         <work:token>nugis</work:token>\r
+         <work:workerID>1</work:workerID>\r
+         <!--Optional:-->\r
+         <work:name>peeter</work:name>\r
+         <!--Optional:-->\r
+         <work:occupation>mees</work:occupation>\r
+         <work:availability>Available</work:availability>\r
+         <!--Optional:-->\r
+         <work:hourlyRate>10</work:hourlyRate>\r
+      </work:setWorkerRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Simple Contains" id="bd6601ff-6668-459e-9c07-f65dc0d1a30b" name="Contains"><con:configuration><token>(?s).*&lt;workerID>[1-9]+&lt;/workerID>.*</token><ignoreCase>false</ignoreCase><useRegEx>true</useRegEx></con:configuration></con:assertion><con:assertion type="Schema Compliance" id="26cb5980-88d6-440e-92cc-b229f752148c" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/work/workPortType/setWorkerRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
