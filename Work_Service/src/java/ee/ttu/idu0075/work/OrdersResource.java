@@ -46,7 +46,7 @@ public class OrdersResource {
      * @return an instance of ee.ttu.idu0075._2015.ws.work.OrderType
      */
     @GET
-    @Path("{orderID: \\d+}") //Supports digits only
+    @Path("{orderID: \\d+}") 
     @Produces("application/json")
     public OrderType getOrder(@PathParam("orderID") String orderID,
             @QueryParam("token") String token) {
@@ -56,7 +56,7 @@ public class OrdersResource {
         request.setToken(token);
         return os.getOrder(request);
     }
-    
+    /*
     @POST
     @Consumes("application/json")
     @Produces("application/json")
@@ -65,6 +65,19 @@ public class OrdersResource {
         WorkService os = new WorkService();
         AddOrderRequest request = new AddOrderRequest();
         request.setWorkerID(content.getWorkerID());
+        request.setStartDate(content.getStartDate());
+        request.setEndDate(content.getEndDate());
+        request.setStatus(content.getStatus());
+        return os.addOrder(request);
+    }
+    */
+    @POST
+    @Consumes("application/json")
+    @Produces("application/json")
+    public OrderType setOrder (OrderType content,
+                            @QueryParam("token") String token) {
+        WorkService os = new WorkService();
+        AddOrderRequest request = new AddOrderRequest();
         request.setStartDate(content.getStartDate());
         request.setEndDate(content.getEndDate());
         request.setStatus(content.getStatus());

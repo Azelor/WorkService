@@ -43,7 +43,7 @@ public class WorkersResource {
     }
     
     @GET
-    @Path("{workerID: \\d+}") //Supports digits only
+    @Path("{workerID: \\d+}")
     @Produces("application/json")
     public WorkerType getWorker(@PathParam("workerID") String workerID,
             @QueryParam("token") String token) {
@@ -61,6 +61,22 @@ public class WorkersResource {
                             @QueryParam("token") String token) {
         WorkService ws = new WorkService();
         AddWorkerRequest request = new AddWorkerRequest();
+        request.setToken(token);        
+        request.setName(content.getName());
+        request.setOccupation(content.getOccupation());
+        request.setAvailability(content.getAvailability());
+        request.setHourlyRate(content.getHourlyRate());
+        return ws.addWorker(request);
+    }
+    
+    @PUT
+    @Consumes("application/json")
+    @Produces("application/json")
+    public WorkerType setWorker (WorkerType content,
+                            @QueryParam("token") String token) {
+        WorkService ws = new WorkService();
+        AddWorkerRequest request = new AddWorkerRequest();
+        request.setToken(token);
         request.setName(content.getName());
         request.setOccupation(content.getOccupation());
         request.setAvailability(content.getAvailability());

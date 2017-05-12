@@ -116,10 +116,9 @@ public class WorkService {
     public OrderType getOrder(GetOrderRequest parameter) {
         OrderType order = new OrderType();
         if (parameter.getToken().equalsIgnoreCase("nugis")) {
-            int size = orderList.size();
+            
             for (int x=0; x<orderList.size(); x++) {
-                BigInteger test = orderList.get(x).getOrderID();
-                BigInteger test2 = parameter.getOrderID();
+                
                 if (orderList.get(x).getOrderID().equals(parameter.getOrderID())) {
                     order = orderList.get(x);
                 }

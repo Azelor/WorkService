@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://kaarelsoota361:8080/Work_Service/WorkService?wsdl" uri="wsdl/kaarelsoota361_8080/Work_Service/WorkService.wsdl"/>
+</catalog>
